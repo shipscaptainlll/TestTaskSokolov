@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf2e4ea7e57827479722a4ce8a9a429, type: 3}
+  m_Name: Flexible UIGroups Data
+  m_EditorClassIdentifier: 
+  wheelsGroupImage: {fileID: 100010, guid: fe191528494ca88499cbd9155cd9ec06, type: 3}
+  wheelsGroupName: Wheels
+  spoilersGroupImage: {fileID: 100000, guid: 25a30a6f0e1bf78429c84b26a6cab7ed, type: 3}
+  spoilersGroupName: Spoilers
+  exhaustsGroupImage: {fileID: 100000, guid: 2bb40d4f9193c1741bc145a6bde6ad76, type: 3}
+  exhaustsGroupName: Exhausts
+  materialsGroupImage: {fileID: 2100000, guid: 0c734397da5cba54286e5bac3fabf64d, type: 2}
+  materialsGroupName: Materials

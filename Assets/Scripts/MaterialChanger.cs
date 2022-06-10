@@ -5,6 +5,11 @@ using UnityEngine;
 public class MaterialChanger : MonoBehaviour
 {
     [SerializeField] Transform colorElementsTable;
+    
+    Transform car;
+
+    GameObject body;
+    Renderer bodyRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +34,27 @@ public class MaterialChanger : MonoBehaviour
         
     }
 
+    public void AssignCarModel(Transform car)
+    {
+        this.car = car;
+        InitializeCarParts();
+    }
+
+    void InitializeCarParts()
+    {
+        body = car.Find("body").gameObject;
+        bodyRenderer = body.GetComponent<Renderer>();
+    }
+
     void ChangeColor(Color color)
     {
-        Debug.Log("new color is " + color);
+        bodyRenderer.material.color = color;
     }
 
     void ChangeMaterial(Material material)
     {
-        Debug.Log("new material is " + material);
+        Color colorCache = bodyRenderer.material.color;
+        bodyRenderer.material = material;
+        bodyRenderer.material.color = colorCache;
     }
 }

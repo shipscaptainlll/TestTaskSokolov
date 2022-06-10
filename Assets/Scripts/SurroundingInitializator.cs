@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SurroundingInitializator : MonoBehaviour
 {
+    [SerializeField] PartsChanger partsChanger;
+    [SerializeField] MaterialChanger materialChanger;
     [SerializeField] Transform startCarExample;
     Transform startCar;
 
@@ -14,6 +16,8 @@ public class SurroundingInitializator : MonoBehaviour
     {
         startCar = Instantiate(startCarExample);
         carInstantiated(startCar);
+        partsChanger.AssignCarModel(startCar);
+        materialChanger.AssignCarModel(startCar);
         //startCar.transform.position = new Vector3(0, 0, 0);
     }
 

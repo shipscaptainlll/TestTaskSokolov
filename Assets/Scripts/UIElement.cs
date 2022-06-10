@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
-public class ColorElement : MonoBehaviour
+public enum AdjustmentsMode
 {
-    /*
-    [SerializeField] UIVariationsBase.ColorMode colorMode;
+    Color,
+    Folder,
+    Carpart
+}
+
+public class UIElement : MonoBehaviour
+{
+    [SerializeField] AdjustmentsMode adjustmentsMode;
 
     Button elementButton;
     
@@ -29,7 +33,6 @@ public class ColorElement : MonoBehaviour
 
     void NotifyClicked()
     {
-        Debug.Log(colorMode + " button clicked");
+        Debug.Log(adjustmentsMode + "button clicked");
     }
-    */
 }

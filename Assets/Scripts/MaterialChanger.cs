@@ -11,6 +11,15 @@ public class MaterialChanger : MonoBehaviour
     GameObject body;
     Renderer bodyRenderer;
 
+    public Transform Car
+    {
+        set
+        {
+            car = value;
+            InitializeCarParts();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,12 +41,6 @@ public class MaterialChanger : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void AssignCarModel(Transform car)
-    {
-        this.car = car;
-        InitializeCarParts();
     }
 
     void InitializeCarParts()

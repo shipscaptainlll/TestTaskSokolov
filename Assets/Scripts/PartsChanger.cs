@@ -22,7 +22,7 @@ public class PartsChanger : MonoBehaviour
     GameObject exhaust3DAnchor;
     Vector3 exhaustDefaultPosition;
 
-    public Transform Car { get { return car; } }
+    public Transform Car { set { car = value; InitializeCarParts(); } get { return car; } }
     public GameObject WheelBackLeft { get { return wheelBackLeft; } }
     public GameObject WheelBackRight { get { return wheelBackRight; } }
     public GameObject WheelFrontLeft { get { return wheelFrontLeft; } }
@@ -73,7 +73,6 @@ public class PartsChanger : MonoBehaviour
     {
         this.car = car;
         InitializeCarParts();
-        Debug.Log(car + " " + wheelBackLeft);
     }
 
     void InitializeCarParts()

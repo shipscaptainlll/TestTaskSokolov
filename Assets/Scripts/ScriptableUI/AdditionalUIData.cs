@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class AdditionalUIData : ScriptableObject
 {
     public Sprite backButtonImage;
-    public Color backButtonColor;
-    
+
+    public Sprite carLightsImage;
+    public String carLightsText;
 }

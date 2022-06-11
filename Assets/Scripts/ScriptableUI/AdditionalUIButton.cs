@@ -7,20 +7,23 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 [RequireComponent(typeof(Image))]
+[RequireComponent(typeof(Text))]
 public class AdditionalUIButton : FlexibleUI
 {
     public enum ButtonType
     {
-        backButton
+        backButton,
+        carLightsButton
     }
 
     Image image;
     Button button;
+    Text text;
 
 
     public ButtonType buttonType;
 
-    public event Action buttonClicked = delegate { };
+    public event Action<String> buttonClicked = delegate { };
 
     private void Start()
     {
@@ -29,7 +32,7 @@ public class AdditionalUIButton : FlexibleUI
 
     void NotifyUIOpener()
     {
-        buttonClicked();
+        buttonClicked(buttonType.ToString());
     }
     protected override void OnSkinUI()
     {
@@ -37,6 +40,7 @@ public class AdditionalUIButton : FlexibleUI
 
         image = GetComponent<Image>();
         button = GetComponent<Button>();
+        text = transform.Find("text").GetComponent<Text>();
 
         image.type = Image.Type.Sliced;
 
@@ -44,7 +48,13 @@ public class AdditionalUIButton : FlexibleUI
         {
             case ButtonType.backButton:
                 image.sprite = additionalUIData.backButtonImage;
-                image.color = additionalUIData.backButtonColor;
+                //image.color = additionalUIData.backButtonColor;
+                text.text = " ";
+                name = buttonType.ToString();
+                break;
+            case ButtonType.carLightsButton:
+                image.sprite = additionalUIData.carLightsImage;
+                text.text = additionalUIData.carLightsText;
                 name = buttonType.ToString();
                 break;
         }

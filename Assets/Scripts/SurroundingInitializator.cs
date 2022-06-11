@@ -7,6 +7,7 @@ public class SurroundingInitializator : MonoBehaviour
 {
     [SerializeField] PartsChanger partsChanger;
     [SerializeField] MaterialChanger materialChanger;
+    [SerializeField] CarLights carLights;
     [SerializeField] Transform startCarExample;
     Transform startCar;
 
@@ -16,8 +17,10 @@ public class SurroundingInitializator : MonoBehaviour
     {
         startCar = Instantiate(startCarExample);
         carInstantiated(startCar);
-        partsChanger.AssignCarModel(startCar);
-        materialChanger.AssignCarModel(startCar);
+        partsChanger.Car = startCar;
+        materialChanger.Car = startCar;
+        carLights.Car = startCar;
+
         //startCar.transform.position = new Vector3(0, 0, 0);
     }
 

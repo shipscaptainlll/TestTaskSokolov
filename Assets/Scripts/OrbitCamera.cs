@@ -62,12 +62,15 @@ public class OrbitCamera : MonoBehaviour
         if (autoRotate)
         {
             autorotationCoroutine = StartCoroutine(AutorotationTimer());
-            Debug.Log(autorotationCoroutine);
         }
 
         foreach (Transform table in groupsHolder)
         {
-            table.GetComponent<UIGroupButton>().buttonClicked += ChangeTarget;
+            if (table.GetComponent<UIGroupButton>())
+            {
+                table.GetComponent<UIGroupButton>().buttonClicked += ChangeTarget;
+            }
+            
         }
 
         foreach (Transform table in elementsHolder)
@@ -106,6 +109,13 @@ public class OrbitCamera : MonoBehaviour
                 xRotationAxis = 2285.57f;
                 target = partsChanger.Car.transform;
                 camera.fieldOfView  = 60;
+                followingTarget = true;
+                break;
+            case "backButton":
+                yRotationAxis = 20.57f;
+                xRotationAxis = 2285.57f;
+                target = partsChanger.Car.transform;
+                camera.fieldOfView = 60;
                 followingTarget = true;
                 break;
         }
@@ -196,7 +206,6 @@ public class OrbitCamera : MonoBehaviour
     {
         Quaternion rotation;
         rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
-        Debug.Log(target.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5 * Time.fixedDeltaTime);
         transform.position = Vector3.Lerp(transform.position, rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position, 4 * Time.fixedDeltaTime);
 
@@ -250,7 +259,6 @@ public class OrbitCamera : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         autorotationTurnedOn = true;
-        Debug.Log("Timer had worked");
     }
 
     private float ClampAngleBetweenMinAndMax(float angle, float min, float max)

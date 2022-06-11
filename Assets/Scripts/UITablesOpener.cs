@@ -21,7 +21,11 @@ public class UITablesOpener : MonoBehaviour
 
         foreach (Transform table in groupsHolder)
         {
-            table.GetComponent<UIGroupButton>().buttonClicked += ShowTable;
+            if (table.GetComponent<UIGroupButton>() != null)
+            {
+                table.GetComponent<UIGroupButton>().buttonClicked += ShowTable;
+            }
+            
         }
 
         foreach (Transform table in elementsHolder)
@@ -54,11 +58,14 @@ public class UITablesOpener : MonoBehaviour
         }
     }
 
-    void ShowMainTable()
+    void ShowMainTable(string buttonType)
     {
-        currentTable.SetActive(false);
-        mainTable.SetActive(true);
-        currentTable = mainTable;
+        if (buttonType == "backButton")
+        {
+            currentTable.SetActive(false);
+            mainTable.SetActive(true);
+            currentTable = mainTable;
+        }
     }
 
     // Update is called once per frame

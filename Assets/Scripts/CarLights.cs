@@ -33,19 +33,6 @@ public class CarLights : MonoBehaviour
         lightsOffColor = Color.HSVToRGB(0, 0, 0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TurnOnLights();
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            TurnOffLights();
-        }
-    }
-
     void ControlLightsState(string buttonType)
     {
         if (buttonType == "carLightsButton")

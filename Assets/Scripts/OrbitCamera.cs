@@ -249,10 +249,7 @@ public class OrbitCamera : MonoBehaviour
                 camera.fieldOfView += zoomXVelocity;
                 zoomXVelocity = Mathf.Lerp(zoomXVelocity, 0, Time.deltaTime * zoomSoothness);
             }
-            
         }
-
-        
     }
 
     public IEnumerator AutorotationTimer()

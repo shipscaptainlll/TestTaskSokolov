@@ -30,13 +30,14 @@ public class UIGroupButton : FlexibleUI
     public event Action<String> buttonClicked = delegate { };
     public void Start()
     {
-        button.onClick.AddListener(NotifyUIOpener);
+        button.onClick.AddListener(NotifySubscribers);
     }
 
-    public void NotifyUIOpener()
+    public void NotifySubscribers()
     {
         buttonClicked(buttonType.ToString());
     }
+
 
     protected override void OnSkinUI()
     {

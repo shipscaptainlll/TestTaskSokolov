@@ -7,16 +7,31 @@ public class PartsChanger : MonoBehaviour
     [SerializeField] Transform wheelsElementsTable;
     [SerializeField] Transform spoilersElementsTable;
     [SerializeField] Transform exhaustsElementsTable;
+    [SerializeField] OrbitCamera orbitCamera;
 
     Transform car;
     GameObject wheelBackLeft;
     GameObject wheelBackRight;
     GameObject wheelFrontLeft;
     GameObject wheelFrontRight;
+    GameObject wheel3DAnchor;
     GameObject spoiler;
+    GameObject spoiler3DAnchor;
     Vector3 spoilerDefaultPosition;
     GameObject exhaust;
+    GameObject exhaust3DAnchor;
     Vector3 exhaustDefaultPosition;
+
+    public Transform Car { get { return car; } }
+    public GameObject WheelBackLeft { get { return wheelBackLeft; } }
+    public GameObject WheelBackRight { get { return wheelBackRight; } }
+    public GameObject WheelFrontLeft { get { return wheelFrontLeft; } }
+    public GameObject WheelFrontRight { get { return wheelFrontRight; } }
+    public GameObject Wheel3DAnchor { get { return wheel3DAnchor; } }
+    public GameObject Spoiler { get { return spoiler; } }
+    public GameObject Spoiler3DAnchor { get { return spoiler3DAnchor; } }
+    public GameObject Exhaust { get { return exhaust; } }
+    public GameObject Exhaust3DAnchor { get { return exhaust3DAnchor; } }
 
 
     // Start is called before the first frame update
@@ -67,14 +82,11 @@ public class PartsChanger : MonoBehaviour
         wheelBackRight = car.Find("wheel_back_right").gameObject;
         wheelFrontLeft = car.Find("wheel_front_left").gameObject;
         wheelFrontRight = car.Find("wheel_front_right").gameObject;
+        wheel3DAnchor = car.Find("wheel3DAnchor").gameObject;
         spoiler = car.Find("spoiler").gameObject;
-        spoilerDefaultPosition = spoiler.transform.position;
+        spoiler3DAnchor = car.Find("spoiler3DAnchor").gameObject;
         exhaust = car.Find("exhaust").gameObject;
-        exhaustDefaultPosition = exhaust.transform.position;
-        Debug.Log(exhaustDefaultPosition);
-
-        //Destroy(spoiler);
-        //Destroy(exhaust);
+        exhaust3DAnchor = car.Find("exhaust3DAnchor").gameObject;
     }
 
     void ChangeWheels(GameObject wheel)
@@ -83,14 +95,12 @@ public class PartsChanger : MonoBehaviour
         wheelBackRight = ChangeWheel(wheelBackRight, wheel, new Vector3(0f, 90f, 0f));
         wheelFrontLeft = ChangeWheel(wheelFrontLeft, wheel, new Vector3(0f, -90f, 0f));
         wheelFrontRight = ChangeWheel(wheelFrontRight, wheel, new Vector3(0f, 90f, 0f));
-        
     }
 
     GameObject ChangeWheel(GameObject wheelOld, GameObject wheelNew, Vector3 defaultRotation)
     {
         GameObject wheelNewCache = Instantiate(wheelNew, wheelOld.transform.position, Quaternion.Euler(defaultRotation));
         wheelNewCache.transform.parent = wheelOld.transform.parent;
-        //wheelNewCache.transform.localPosition = wheelOld.transform.localPosition;
         wheelNewCache.transform.SetSiblingIndex(wheelOld.transform.GetSiblingIndex());
         Destroy(wheelOld);
         return wheelNewCache;
@@ -98,7 +108,7 @@ public class PartsChanger : MonoBehaviour
 
     void ChangeSpoiler(GameObject spoiler)
     {
-        GameObject spoilerNewCache = (GameObject) Instantiate(spoiler, spoiler.transform.position + spoilerDefaultPosition, this.spoiler.transform.rotation);
+        GameObject spoilerNewCache = (GameObject) Instantiate(spoiler, spoiler.transform.position + spoiler3DAnchor.transform.position, this.spoiler.transform.rotation);
         spoilerNewCache.transform.parent = this.spoiler.transform.parent;
         spoilerNewCache.transform.SetSiblingIndex(this.spoiler.transform.GetSiblingIndex());
         Destroy(this.spoiler);
@@ -106,7 +116,7 @@ public class PartsChanger : MonoBehaviour
     }
     void ChangeExhaust(GameObject exhaust)
     {
-        GameObject exhaustNewCache = (GameObject)Instantiate(exhaust, exhaust.transform.position + exhaustDefaultPosition, this.exhaust.transform.rotation);
+        GameObject exhaustNewCache = (GameObject)Instantiate(exhaust, exhaust.transform.position + exhaust3DAnchor.transform.position, this.exhaust.transform.rotation);
         exhaustNewCache.transform.parent = this.exhaust.transform.parent;
         exhaustNewCache.transform.SetSiblingIndex(this.exhaust.transform.GetSiblingIndex());
         Destroy(this.exhaust);

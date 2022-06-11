@@ -13,13 +13,17 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] Vector2 rotationLimit = new Vector2(5, 80);
     [Header("Zoom")]
     [SerializeField] Vector2 cameraZoomRangeFOV = new Vector2(10, 60);
-    [SerializeField] float zoomSoothness = 10f;
+    [SerializeField] float zoomSoothness = 4.5f;
+    [SerializeField] float zoomVelocity = 1;
     [Header("Aurotation")]
     [SerializeField] bool autoRotate = true;
     [SerializeField] float rotationSpeed = 0.1f;
     [SerializeField] float startRotation = 180;
 
-    Transform target;
+    [SerializeField] Transform target;
+    [SerializeField] Transform groupsHolder;
+    [SerializeField] PartsChanger partsChanger;
+    [SerializeField] Transform elementsHolder;
     new Camera camera;
     float cameraFieldOfView;
     new Transform transform;
@@ -28,10 +32,20 @@ public class OrbitCamera : MonoBehaviour
     float yVelocity;
     float xRotationAxis;
     float yRotationAxis;
-    float zoomVelocity;
+    
+    bool followingTarget;
 
     Coroutine autorotationCoroutine;
     bool autorotationTurnedOn;
+
+
+
+    float zoomXVelocity;
+    float zoomXVar;
+    public Transform Target
+    {
+        set { target = value; }
+    }
 
     private void Awake()
     {
@@ -50,11 +64,69 @@ public class OrbitCamera : MonoBehaviour
             autorotationCoroutine = StartCoroutine(AutorotationTimer());
             Debug.Log(autorotationCoroutine);
         }
+
+        foreach (Transform table in groupsHolder)
+        {
+            table.GetComponent<UIGroupButton>().buttonClicked += ChangeTarget;
+        }
+
+        foreach (Transform table in elementsHolder)
+        {
+            table.Find("AdditionalUI").Find("backButton").GetComponent<AdditionalUIButton>().buttonClicked += ChangeTarget;
+        }
     }
 
-    public void ChangeTarget(Transform newTarget)
+    public void ChangeTarget(String targetUIGroup)
     {
-        target = newTarget;
+        switch (targetUIGroup)
+        {
+            case "wheelsGroup":
+                yRotationAxis = 17.21f;
+                xRotationAxis = 626.0f;
+                target = partsChanger.Wheel3DAnchor.transform;
+                camera.fieldOfView = 30;
+                followingTarget = true;
+                break;
+            case "spoilersGroup":
+                yRotationAxis = 19.04f;
+                xRotationAxis = 2480.05f;
+                target = partsChanger.Spoiler3DAnchor.transform;
+                camera.fieldOfView = 20;
+                followingTarget = true;
+                break;
+            case "exhaustsGroup":
+                yRotationAxis = 16.09f;
+                xRotationAxis = 3212.9f;
+                target = partsChanger.Exhaust3DAnchor.transform;
+                camera.fieldOfView = 20;
+                followingTarget = true;
+                break;
+            case "materialsGroup":
+                yRotationAxis = 20.57f;
+                xRotationAxis = 2285.57f;
+                target = partsChanger.Car.transform;
+                camera.fieldOfView  = 60;
+                followingTarget = true;
+                break;
+        }
+    }
+
+    public void ChangeTarget(Transform target)
+    {
+        yRotationAxis = 20.57f;
+        xRotationAxis = 2285.57f;
+        this.target = target;
+        camera.fieldOfView = 60;
+        followingTarget = true;
+    }
+
+    public void ChangeTarget()
+    {
+        yRotationAxis = 20.57f;
+        xRotationAxis = 2285.57f;
+        this.target = partsChanger.Car;
+        camera.fieldOfView = 60;
+        followingTarget = true;
     }
 
     private void Update()
@@ -66,72 +138,117 @@ public class OrbitCamera : MonoBehaviour
     {
         if (autorotationTurnedOn)
         {
-            xVelocity += rotationSpeed * xRotationSensitivity;
+            AutoRotation();
         }
-        if (target)
+        if (!followingTarget)
         {
-            
-            
-            Quaternion rotation;
-            Vector3 position;
-            float deltaTime = Time.deltaTime;
+            ManualRotation();
+        } else { 
+            FollowTarget(); 
+        }
+    }
 
-            if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+    void AutoRotation()
+    {
+        xVelocity += rotationSpeed * xRotationSensitivity;
+    }
+
+    void ManualRotation()
+    {
+        Quaternion rotation;
+        Vector3 position;
+        float deltaTime = Time.deltaTime;
+
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        {
+            if (autorotationCoroutine != null)
             {
-                if(autorotationCoroutine != null)
-                {
-                    StopAllCoroutines();
-                    autorotationCoroutine = StartCoroutine(AutorotationTimer());
-                }
-                if (autorotationTurnedOn)
-                {
-                    autorotationTurnedOn = false;
-                    StartCoroutine(AutorotationTimer());
-                }
-
-                xVelocity += Input.GetAxis("Mouse X") * xRotationSensitivity;
-                yVelocity -= Input.GetAxis("Mouse Y") * yRotationSensitivity;
+                StopAllCoroutines();
+                autorotationCoroutine = StartCoroutine(AutorotationTimer());
+            }
+            if (autorotationTurnedOn)
+            {
+                autorotationTurnedOn = false;
+                StartCoroutine(AutorotationTimer());
             }
 
-            xRotationAxis += xVelocity;
-            yRotationAxis += yVelocity;
+            xVelocity += Input.GetAxis("Mouse X") * xRotationSensitivity * Time.deltaTime * 250;
+            yVelocity -= Input.GetAxis("Mouse Y") * yRotationSensitivity * Time.deltaTime * 25;
+        }
 
-            yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
+        xRotationAxis += xVelocity;
+        yRotationAxis += yVelocity;
 
-            rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
-            position = rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position;
+        yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
 
-            transform.rotation = rotation;
-            transform.position = position;
+        rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
+        position = rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position;
+        //position = Vector3.Lerp(transform.position, rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position, 4 * Time.fixedDeltaTime);
 
-            xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * rotationSmoothing);
-            yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * rotationSmoothing);
+        transform.rotation = rotation;
+        transform.position = position;
+
+        xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * rotationSmoothing);
+        yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * rotationSmoothing);
+    }
+
+    void FollowTarget()
+    {
+        Quaternion rotation;
+        rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
+        Debug.Log(target.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5 * Time.fixedDeltaTime);
+        transform.position = Vector3.Lerp(transform.position, rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position, 4 * Time.fixedDeltaTime);
+
+
+        Vector3 distance = transform.position - (rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position);
+        float angleDifference = Quaternion.Angle(transform.rotation, rotation);
+
+        if (distance.magnitude < 0.5f && angleDifference < 0.01f)
+        {
+            followingTarget = false;
         }
     }
 
     private void Zoom()
     {
-        float deltaTime = Time.deltaTime;
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
-            cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity, deltaTime * zoomSoothness);
+            zoomXVelocity -= Input.GetAxis("Mouse ScrollWheel") * zoomVelocity;
         }
         else
         {
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             {
-                cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity, deltaTime * zoomSoothness);
+                zoomXVelocity -= Input.GetAxis("Mouse ScrollWheel") * zoomVelocity;
             }
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (zoomXVelocity > 0.0016f || zoomXVelocity < -0.0016f)
         {
-            camera.fieldOfView = cameraFieldOfView;
+            if (camera.fieldOfView < cameraZoomRangeFOV.x)
+            {
+                camera.fieldOfView = cameraZoomRangeFOV.x;
+                zoomXVelocity = 0;
+            }
+            else if (camera.fieldOfView > cameraZoomRangeFOV.y)
+            {
+                camera.fieldOfView = cameraZoomRangeFOV.y;
+                zoomXVelocity = 0;
+            }
+            else
+            {
+                camera.fieldOfView += zoomXVelocity;
+                zoomXVelocity = Mathf.Lerp(zoomXVelocity, 0, Time.deltaTime * zoomSoothness);
+            }
+            
         }
+
+        
     }
 
     public IEnumerator AutorotationTimer()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         autorotationTurnedOn = true;
         Debug.Log("Timer had worked");
     }

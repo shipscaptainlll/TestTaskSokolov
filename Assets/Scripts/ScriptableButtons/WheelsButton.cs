@@ -25,18 +25,16 @@ public class WheelsButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    public event Action<GameObject> wheelsChanged = delegate { };
-
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(NotifyPartsChanger);
+        button.onClick.AddListener(ChangeParts);
         UIInitialisation();
     }
 
-    void NotifyPartsChanger()
+    void ChangeParts()
     {
-        wheelsChanged(wheel);
+        PartsChanger.ChangeWheels(wheel);
     }
 
     void UIInitialisation()

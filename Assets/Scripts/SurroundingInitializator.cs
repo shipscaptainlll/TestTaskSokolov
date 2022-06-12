@@ -7,19 +7,20 @@ public class SurroundingInitializator : MonoBehaviour
 {
     [SerializeField] PartsChanger partsChanger;
     [SerializeField] MaterialChanger materialChanger;
-    [SerializeField] CarLights carLights;
+    [SerializeField] CarLightsSwitcher carLights;
     [SerializeField] Transform startCarExample;
     Transform startCar;
 
-    public event Action<Transform> carInstantiated = delegate { };
+    //public event Action<Transform> carInstantiated = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         startCar = Instantiate(startCarExample);
-        carInstantiated(startCar);
-        partsChanger.Car = startCar;
-        materialChanger.Car = startCar;
-        carLights.Car = startCar;
+        //carInstantiated(startCar);
+        PartsChanger.Car = startCar;
+        MaterialChanger.Car = startCar;
+        CarLightsSwitcher.Car = startCar;
+        OrbitCamera.ChangeTarget(startCar);
 
         //startCar.transform.position = new Vector3(0, 0, 0);
     }

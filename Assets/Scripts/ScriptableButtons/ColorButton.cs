@@ -28,16 +28,16 @@ public class ColorButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    public event Action<Color> colorChanged = delegate { };
-    public event Action<Color, Color> colorBIChanged = delegate { };
+    //public event Action<Color> colorChanged = delegate { };
+    //public event Action<Color, Color> colorBIChanged = delegate { };
 
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(NotifyMaterialChanger);
+        button.onClick.AddListener(ChangeColor);
         UIInitialisation();
     }
-
+    /*
     void NotifyMaterialChanger()
     {
         if (!colorBI)
@@ -49,11 +49,22 @@ public class ColorButton : FlexibleUI
         }
         
     }
+    */
+
+    void ChangeColor()
+    {
+        if (!colorBI)
+        {
+            MaterialChanger.ChangeColor(colorMain);
+        }
+        else
+        {
+            MaterialChanger.ChangeBIColor(colorMain, colorFresnel);
+        }
+    }
 
     void UIInitialisation()
     {
-        base.OnSkinUI();
-
         image = GetComponent<Image>();
 
         image.type = Image.Type.Sliced;

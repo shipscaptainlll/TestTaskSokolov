@@ -17,4 +17,7 @@ public class AdditionalUIData : ScriptableObject
 
     public Sprite czFlagImage;
     public String czechLanguageName;
+
+    public Sprite screenShotImage;
+    public String screenShotName;
 }

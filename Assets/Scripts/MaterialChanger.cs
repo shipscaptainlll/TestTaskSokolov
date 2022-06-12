@@ -5,13 +5,13 @@ using UnityEngine;
 public class MaterialChanger : MonoBehaviour
 {
     [SerializeField] Transform colorElementsTable;
-    
-    Transform car;
 
-    GameObject body;
-    Renderer bodyRenderer;
+    static Transform car;
 
-    public Transform Car
+    static GameObject body;
+    static Renderer bodyRenderer;
+
+    public static Transform Car
     {
         set
         {
@@ -23,6 +23,7 @@ public class MaterialChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         Transform colorElementsHolder = colorElementsTable.Find("MainElements");
         foreach(Transform table in colorElementsHolder)
         {
@@ -36,6 +37,7 @@ public class MaterialChanger : MonoBehaviour
                 table.GetComponent<TintButton>().tintChanged += ChangeMaterial;
             }
         }
+        */
     }
 
     // Update is called once per frame
@@ -44,26 +46,26 @@ public class MaterialChanger : MonoBehaviour
         
     }
 
-    void InitializeCarParts()
+    static void InitializeCarParts()
     {
         body = car.Find("body").gameObject;
         bodyRenderer = body.GetComponent<Renderer>();
     }
 
-    void ChangeColor(Color color)
+    public static void ChangeColor(Color color)
     {
         bodyRenderer.material.SetInt("_isBITint", 0);
         bodyRenderer.material.SetColor("_MainColor", color);
     }
 
-    void ChangeBIColor(Color colorMain, Color colorFresnel)
+    public static void ChangeBIColor(Color colorMain, Color colorFresnel)
     {
         bodyRenderer.material.SetInt("_isBITint", 1);
         bodyRenderer.material.SetColor("_MainColor", colorMain);
         bodyRenderer.material.SetColor("_FresnelColor", colorFresnel);
     }
 
-    void ChangeMaterial(float metallicValue)
+    public static void ChangeTint(float metallicValue)
     {
         bodyRenderer.material.SetFloat("_Metallic", metallicValue); 
     }

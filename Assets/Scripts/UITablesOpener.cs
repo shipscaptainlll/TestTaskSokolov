@@ -4,38 +4,29 @@ using UnityEngine;
 
 public class UITablesOpener : MonoBehaviour
 {
-    [SerializeField] Transform groupsHolder;
-    [SerializeField] GameObject mainTable;
-    [SerializeField] Transform elementsHolder;
-    [SerializeField] GameObject materialsTable;
-    [SerializeField] GameObject wheelsTable;
-    [SerializeField] GameObject spoilersTable;
-    [SerializeField] GameObject exhaustsTable;
-
-    GameObject currentTable;
-
+    //static Transform groupsHolder;
+    public static GameObject mainTable;
+    //static Transform elementsHolder;
+    public static GameObject materialsTable;
+    public static GameObject wheelsTable;
+    public static GameObject spoilersTable;
+    public static GameObject exhaustsTable;
+    public static GameObject currentTable;
+    
     // Start is called before the first frame update
     void Start()
     {
-        currentTable = mainTable;
-
-        foreach (Transform table in groupsHolder)
-        {
-            if (table.GetComponent<UIGroupButton>() != null)
-            {
-                table.GetComponent<UIGroupButton>().buttonClicked += ShowTable;
-            }
-            
-        }
-
-        foreach (Transform table in elementsHolder)
-        {
-            table.Find("AdditionalUI").Find("backButton").GetComponent<AdditionalUIButton>().buttonClicked += ShowMainTable;
-        }
+        InitializeUITables();
     }
 
-    void ShowTable(string tableName)
+    void InitializeUITables()
     {
+
+    }
+
+    public static void ShowTable(string tableName)
+    {
+        Debug.Log(tableName);
         currentTable.SetActive(false);
         switch (tableName)
         {
@@ -54,6 +45,11 @@ public class UITablesOpener : MonoBehaviour
             case "materialsGroup":
                 materialsTable.SetActive(true);
                 currentTable = materialsTable;
+                break;
+            case "backButton":
+                currentTable.SetActive(false);
+                mainTable.SetActive(true);
+                currentTable = mainTable;
                 break;
         }
     }

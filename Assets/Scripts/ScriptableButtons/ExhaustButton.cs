@@ -28,18 +28,16 @@ public class ExhaustButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    public event Action<GameObject> exhaustChanged = delegate { };
-
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(NotifyPartsChanger);
+        button.onClick.AddListener(ChangeParts);
         UIInitialisation();
     }
 
-    void NotifyPartsChanger()
+    void ChangeParts()
     {
-        exhaustChanged(exhaust);
+        PartsChanger.ChangeExhaust(exhaust);
     }
 
     void UIInitialisation()

@@ -20,18 +20,25 @@ public class TintButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    public event Action<float> tintChanged = delegate { };
+    //public event Action<float> tintChanged = delegate { };
 
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(NotifyMaterialChanger);
+        button.onClick.AddListener(ChangeTint);
         UIInitialisation();
     }
 
+    /*
     void NotifyMaterialChanger()
     {
         tintChanged(metallicValue);
+    }
+    */
+
+    void ChangeTint()
+    {
+        MaterialChanger.ChangeTint(metallicValue);
     }
 
     void UIInitialisation()

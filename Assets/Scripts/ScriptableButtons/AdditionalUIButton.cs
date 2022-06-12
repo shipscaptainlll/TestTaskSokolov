@@ -15,7 +15,8 @@ public class AdditionalUIButton : FlexibleUI
         backButton,
         carLightsButton,
         czechLanguage,
-        englishLanguage
+        englishLanguage,
+        screenShotButton
     }
 
     Image image;
@@ -24,9 +25,6 @@ public class AdditionalUIButton : FlexibleUI
 
 
     public ButtonType buttonType;
-
-    public event Action<String> buttonClicked = delegate { };
-    public event Action<String> languageSelected = delegate { };
 
     private void Start()
     {
@@ -46,40 +44,61 @@ public class AdditionalUIButton : FlexibleUI
                 image.sprite = additionalUIData.backButtonImage;
                 text.text = " ";
                 name = buttonType.ToString();
-                button.onClick.AddListener(NotifyUIOpener);
+                button.onClick.AddListener(OpenMainTable);
+                button.onClick.AddListener(OpenMainTable);
                 break;
             case ButtonType.carLightsButton:
                 image.sprite = additionalUIData.carLightsImage;
+                CarLightsSwitcher.lightsButtonMaterial = image;
+                image.color = Color.black;
                 text.text = additionalUIData.carLightsText;
                 name = buttonType.ToString();
-                button.onClick.AddListener(NotifyUIOpener);
+                button.onClick.AddListener(SwitchLights);
                 break;
             case ButtonType.czechLanguage:
                 image.sprite = additionalUIData.czFlagImage;
+                image.color = Color.white;
                 text.text = additionalUIData.czechLanguageName;
                 name = buttonType.ToString();
-                button.onClick.AddListener(NotifyLocalizator);
+                button.onClick.AddListener(ChangeLanguage);
                 break;
             case ButtonType.englishLanguage:
                 image.sprite = additionalUIData.engFlagImage;
+                image.color = Color.white;
                 text.text = additionalUIData.englishLanguageName;
                 name = buttonType.ToString();
-                button.onClick.AddListener(NotifyLocalizator);
+                button.onClick.AddListener(ChangeLanguage);
+                break;
+            case ButtonType.screenShotButton:
+                image.sprite = additionalUIData.screenShotImage;
+                image.color = Color.white;
+                text.text = additionalUIData.screenShotName;
+                name = buttonType.ToString();
+                button.onClick.AddListener(TakeScreenShot);
                 break;
         }
     }
 
-    void NotifyUIOpener()
+    void OpenMainTable()
     {
-        buttonClicked(buttonType.ToString());
+        UITablesOpener.ShowTable(buttonType.ToString());
+        OrbitCamera.ChangeTarget(buttonType.ToString());
     }
 
-    void NotifyLocalizator()
+    void SwitchLights()
     {
-        languageSelected(buttonType.ToString());
+        CarLightsSwitcher.ControlLightsState(buttonType.ToString());
     }
 
-    
+    void ChangeLanguage()
+    {
+        LocaleSelector.ChangeLocale(buttonType.ToString());
+    }
+    void TakeScreenShot()
+    {
+        ScreenShot.TakeScreenshot();
+    }
+
 
     //UI update in Editor mode
     protected override void OnSkinUI()
@@ -96,7 +115,6 @@ public class AdditionalUIButton : FlexibleUI
         {
             case ButtonType.backButton:
                 image.sprite = additionalUIData.backButtonImage;
-                //image.color = additionalUIData.backButtonColor;
                 text.text = " ";
                 name = buttonType.ToString();
                 break;
@@ -107,12 +125,20 @@ public class AdditionalUIButton : FlexibleUI
                 break;
             case ButtonType.czechLanguage:
                 image.sprite = additionalUIData.czFlagImage;
+                image.color = Color.white;
                 text.text = additionalUIData.czechLanguageName;
                 name = buttonType.ToString();
                 break;
             case ButtonType.englishLanguage:
                 image.sprite = additionalUIData.engFlagImage;
+                image.color = Color.white;
                 text.text = additionalUIData.englishLanguageName;
+                name = buttonType.ToString();
+                break;
+            case ButtonType.screenShotButton:
+                image.sprite = additionalUIData.screenShotImage;
+                image.color = Color.white;
+                text.text = additionalUIData.screenShotName;
                 name = buttonType.ToString();
                 break;
         }

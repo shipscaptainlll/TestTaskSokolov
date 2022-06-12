@@ -20,30 +20,26 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] float rotationSpeed = 0.1f;
     [SerializeField] float startRotation = 180;
 
-    [SerializeField] Transform target;
-    [SerializeField] Transform groupsHolder;
-    [SerializeField] PartsChanger partsChanger;
-    [SerializeField] Transform elementsHolder;
-    new Camera camera;
-    float cameraFieldOfView;
+    static Transform target;
+    new static Camera camera;
+    static float xRotationAxis;
+    static float yRotationAxis;
+    static bool followingTarget;
+
     new Transform transform;
-    SurroundingInitializator surroundingInitializator;
+
     float xVelocity;
     float yVelocity;
-    float xRotationAxis;
-    float yRotationAxis;
-    
-    bool followingTarget;
+
+    float cameraFieldOfView;
+    float zoomXVelocity;
 
     Coroutine autorotationCoroutine;
     bool autorotationTurnedOn;
-
-
-
-    float zoomXVelocity;
-    float zoomXVar;
-    public Transform Target
+    
+    public static Transform Target
     {
+        get { return target; }
         set { target = value; }
     }
 
@@ -51,8 +47,6 @@ public class OrbitCamera : MonoBehaviour
     {
         camera = GetComponent<Camera>();
         transform = GetComponent<Transform>();
-        surroundingInitializator = transform.parent.Find("Scripts").Find("SurroundingInitializator").GetComponent<SurroundingInitializator>();
-        surroundingInitializator.carInstantiated += ChangeTarget;
     }
 
     private void Start()
@@ -63,69 +57,55 @@ public class OrbitCamera : MonoBehaviour
         {
             autorotationCoroutine = StartCoroutine(AutorotationTimer());
         }
-
-        foreach (Transform table in groupsHolder)
-        {
-            if (table.GetComponent<UIGroupButton>())
-            {
-                table.GetComponent<UIGroupButton>().buttonClicked += ChangeTarget;
-            }
-            
-        }
-
-        foreach (Transform table in elementsHolder)
-        {
-            table.Find("AdditionalUI").Find("backButton").GetComponent<AdditionalUIButton>().buttonClicked += ChangeTarget;
-        }
     }
 
-    public void ChangeTarget(String targetUIGroup)
+    public static void ChangeTarget(String targetUIGroup)
     {
         switch (targetUIGroup)
         {
             case "wheelsGroup":
                 yRotationAxis = 17.21f;
                 xRotationAxis = 626.0f;
-                target = partsChanger.Wheel3DAnchor.transform;
+                target = PartsChanger.Wheel3DAnchor.transform;
                 camera.fieldOfView = 30;
                 followingTarget = true;
                 break;
             case "spoilersGroup":
                 yRotationAxis = 19.04f;
                 xRotationAxis = 2480.05f;
-                target = partsChanger.Spoiler3DAnchor.transform;
+                target = PartsChanger.Spoiler3DAnchor.transform;
                 camera.fieldOfView = 20;
                 followingTarget = true;
                 break;
             case "exhaustsGroup":
                 yRotationAxis = 16.09f;
                 xRotationAxis = 3212.9f;
-                target = partsChanger.Exhaust3DAnchor.transform;
+                target = PartsChanger.Exhaust3DAnchor.transform;
                 camera.fieldOfView = 20;
                 followingTarget = true;
                 break;
             case "materialsGroup":
                 yRotationAxis = 20.57f;
                 xRotationAxis = 2285.57f;
-                target = partsChanger.Car.transform;
+                target = PartsChanger.Car.transform;
                 camera.fieldOfView  = 60;
                 followingTarget = true;
                 break;
             case "backButton":
                 yRotationAxis = 20.57f;
                 xRotationAxis = 2285.57f;
-                target = partsChanger.Car.transform;
+                target = PartsChanger.Car.transform;
                 camera.fieldOfView = 60;
                 followingTarget = true;
                 break;
         }
     }
 
-    public void ChangeTarget(Transform target)
+    public static void ChangeTarget(Transform newTarget)
     {
         yRotationAxis = 20.57f;
         xRotationAxis = 2285.57f;
-        this.target = target;
+        target = newTarget;
         camera.fieldOfView = 60;
         followingTarget = true;
     }
@@ -134,7 +114,7 @@ public class OrbitCamera : MonoBehaviour
     {
         yRotationAxis = 20.57f;
         xRotationAxis = 2285.57f;
-        this.target = partsChanger.Car;
+        target = PartsChanger.Car;
         camera.fieldOfView = 60;
         followingTarget = true;
     }
@@ -193,7 +173,6 @@ public class OrbitCamera : MonoBehaviour
 
         rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
         position = rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position;
-        //position = Vector3.Lerp(transform.position, rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position, 4 * Time.fixedDeltaTime);
 
         transform.rotation = rotation;
         transform.position = position;

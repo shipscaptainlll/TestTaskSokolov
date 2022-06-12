@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CarLights : MonoBehaviour
+public class CarLightsSwitcher : MonoBehaviour
 {
-    [SerializeField] Transform groupsHolder;
 
-    Image lightsButtonMaterial;
-    Transform car;
-    Transform lights;
-    Material lightsMaterial;
+    public static Image lightsButtonMaterial;
+    public static Transform car;
+    public static Transform lights;
+    public static Material lightsMaterial;
 
-    bool lightsOn = false;
-    Color lightsOnColor;
-    Color lightsOffColor;
-    public Transform Car {
+    static bool lightsOn = false;
+    static Color lightsOnColor;
+    static Color lightsOffColor;
+    public static Transform Car {
         set { 
             car = value;
             lights = car.Find("lights");
@@ -26,14 +25,11 @@ public class CarLights : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lightsButtonMaterial = groupsHolder.Find("carLightsButton").GetComponent<Image>();
-        groupsHolder.Find("carLightsButton").GetComponent<AdditionalUIButton>().buttonClicked += ControlLightsState;
         lightsOnColor = new Color(0.890f, 0.890f, 0.890f, 1);
-        
         lightsOffColor = Color.HSVToRGB(0, 0, 0);
     }
 
-    void ControlLightsState(string buttonType)
+    public static void ControlLightsState(string buttonType)
     {
         if (buttonType == "carLightsButton")
         {
@@ -41,15 +37,17 @@ public class CarLights : MonoBehaviour
         }
     }
 
-    void TurnOnLights()
+    static void TurnOnLights()
     {
+        Debug.Log("Lights turned on");
         lightsMaterial.SetColor("_EmissionColor", lightsOnColor);
         lightsButtonMaterial.color = Color.white;
         lightsOn = true;
     }
 
-    void TurnOffLights()
+    static void TurnOffLights()
     {
+        Debug.Log("Lights turned off");
         lightsMaterial.SetColor("_EmissionColor", lightsOffColor);
         lightsButtonMaterial.color = Color.black;
         lightsOn = false;

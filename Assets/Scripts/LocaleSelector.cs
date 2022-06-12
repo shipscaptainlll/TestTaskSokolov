@@ -5,33 +5,15 @@ using UnityEngine.Localization.Settings;
 
 public class LocaleSelector : MonoBehaviour
 {
-    [SerializeField] Transform languagesButtonsHolder;
-    bool active = false;
-
-    void Start()
-    {
-        foreach (Transform languageButton in languagesButtonsHolder)
-        {
-            if (languageButton.GetComponent<AdditionalUIButton>() != null)
-            {
-                languageButton.GetComponent<AdditionalUIButton>().languageSelected += ChangeLocale;
-            }
-        }
-    }
-
-    public void ChangeLocale(string languageName)
+    static bool active = false;
+    
+    public static void ChangeLocale(string languageName)
     {
         if (active == true)
         {
             return;
         }
-        StartCoroutine(SetLocale(languageName));
-    }
-
-    IEnumerator SetLocale(string languageName)
-    {
         active = true;
-        yield return LocalizationSettings.InitializationOperation;
         int localeID = 0;
         switch (languageName)
         {
@@ -41,8 +23,6 @@ public class LocaleSelector : MonoBehaviour
             case "englishLanguage":
                 localeID = 1;
                 break;
-            
-            
         }
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localeID];
         active = false;

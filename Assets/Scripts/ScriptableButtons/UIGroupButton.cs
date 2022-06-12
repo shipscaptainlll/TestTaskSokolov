@@ -27,17 +27,23 @@ public class UIGroupButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    public event Action<String> buttonClicked = delegate { };
+    //public event Action<String> buttonClicked = delegate { };
     public void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(NotifySubscribers);
+        button.onClick.AddListener(ShowUITable);
+        button.onClick.AddListener(ChangeCameraTarget);
         UIInitialisation();
     }
 
-    public void NotifySubscribers()
+    public void ChangeCameraTarget()
     {
-        buttonClicked(buttonType.ToString());
+        OrbitCamera.ChangeTarget(buttonType.ToString());
+    }
+
+    void ShowUITable()
+    {
+        UITablesOpener.ShowTable(buttonType.ToString());
     }
 
     void UIInitialisation()

@@ -25,18 +25,16 @@ public class SpoilerButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    public event Action<GameObject> spoilerChanged = delegate { };
-
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(NotifyPartsChanger);
+        button.onClick.AddListener(ChangeParts);
         UIInitialisation();
     }
 
-    void NotifyPartsChanger()
+    void ChangeParts()
     {
-        spoilerChanged(spoiler);
+        PartsChanger.ChangeSpoiler(spoiler);
     }
 
     void UIInitialisation()

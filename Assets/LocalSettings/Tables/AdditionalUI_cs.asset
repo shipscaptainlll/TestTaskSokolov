@@ -34,5 +34,9 @@ MonoBehaviour:
     m_Localized: ' '
     m_Metadata:
       m_Items: []
+  - m_Id: 86028006969344
+    m_Localized: Screenshot
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

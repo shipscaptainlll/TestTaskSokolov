@@ -6,29 +6,39 @@ using UnityEngine.Rendering;
 public class ScreenShot : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] Canvas mainUICanvas;
-    [SerializeField] string screenshotsDataPath;
+    [SerializeField] string saveDataPath;
     [Header("Optional")]
-    [SerializeField] bool nonUIScreenshots;
-    bool takeScreenshot;
-    int screenshotID;
+    [SerializeField] bool turnOffUI;
 
+    static GameObject mainUICanvas;
+    static bool takeScreenshot;
+    static int screenshotID;
+    
+    static string screenshotsDataPath;
+    static bool nonUIScreenshots;
+
+    static ScreenShot instance;
 
     void Start()
     {
+        instance = this;
+        OnAfterDeserialize();
         if (string.IsNullOrEmpty(screenshotsDataPath))
         {
             screenshotsDataPath = (Application.dataPath + "/Screenshots").ToString();
         }
+        mainUICanvas = GameObject.FindWithTag("UI");
     }
 
-    public void CaptureScreenshot()
+
+    //Rychle se objevuje ve folder aplikaci /Assets/Screenshot. Ve stejnem folder v Unity je potreba pockat, az system ho aktualizuje
+    public static void TakeScreenshot()
     {
-        StartCoroutine(MakeScreenshot());
+        instance.StartCoroutine(MakeScreenshot());
     }
 
     //Jestli flickering UI vadi, da se to udelat i jinym spusobem
-    public IEnumerator MakeScreenshot()
+    public static IEnumerator MakeScreenshot()
     {
         yield return null;
 
@@ -37,20 +47,18 @@ public class ScreenShot : MonoBehaviour
             screenshotID++;
         }
 
-        if (nonUIScreenshots) { mainUICanvas.enabled = false; }
+        if (nonUIScreenshots) { mainUICanvas.SetActive(false); }
 
         yield return new WaitForEndOfFrame();
 
         ScreenCapture.CaptureScreenshot(screenshotsDataPath + "/screenshot" + screenshotID + ".png");
 
-        if (nonUIScreenshots) { mainUICanvas.enabled = true; }
+        if (nonUIScreenshots) { mainUICanvas.SetActive(true); }
     }
 
-    void Update()
+    void OnAfterDeserialize()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            CaptureScreenshot();
-        }
+        screenshotsDataPath = saveDataPath;
+        nonUIScreenshots = turnOffUI;
     }
 }

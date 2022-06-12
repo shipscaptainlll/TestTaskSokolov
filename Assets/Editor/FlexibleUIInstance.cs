@@ -46,8 +46,12 @@ public class FlexibleUIInstance : Editor
     {
         Create("AdditionalUIButton");
     }
-    
 
+    [MenuItem("GameObject/Flexible UI/UITable", priority = 0)]
+    public static void AddAdditionalUITable()
+    {
+        Create("AdditionalUITable");
+    }
 
 
     static GameObject clickedObject;

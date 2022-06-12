@@ -12,6 +12,7 @@ public class FlexibleUI : MonoBehaviour
     public ExhaustData exhaustData;
     public UIGroupsData uiGroupsData;
     public AdditionalUIData additionalUIData;
+    public UITableData uiTableData;
 
     protected virtual void OnSkinUI()
     {

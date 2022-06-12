@@ -19,3 +19,5 @@ MonoBehaviour:
   englishLanguageName: English
   czFlagImage: {fileID: 21300000, guid: 8949a406bec9034488e6b8e6bfbd5e96, type: 3}
   czechLanguageName: Czech
+  screenShotImage: {fileID: 21300000, guid: d2307291b9b40d24e920f6d3dbf3586a, type: 3}
+  screenShotName: Screenshot

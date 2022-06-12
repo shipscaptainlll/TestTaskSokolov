@@ -31,6 +31,10 @@ MonoBehaviour:
     m_Key: Back Button
     m_Metadata:
       m_Items: []
+  - m_Id: 86028006969344
+    m_Key: Screenshot
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

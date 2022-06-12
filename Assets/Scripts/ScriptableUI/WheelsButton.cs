@@ -29,6 +29,7 @@ public class WheelsButton : FlexibleUI
 
     private void Start()
     {
+        button = GetComponent<Button>();
         button.onClick.AddListener(NotifyPartsChanger);
     }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   wheelsGroupName: Wheels
   spoilersGroupImage: {fileID: 100000, guid: 25a30a6f0e1bf78429c84b26a6cab7ed, type: 3}
   spoilersGroupName: Spoilers
-  exhaustsGroupImage: {fileID: 100000, guid: 2bb40d4f9193c1741bc145a6bde6ad76, type: 3}
+  exhaustsGroupImage: {fileID: 100000, guid: bd166638495c2a94cba0e7fd6ad5cafb, type: 3}
   exhaustsGroupName: Exhausts
   materialsGroupImage: {fileID: 2100000, guid: 0c734397da5cba54286e5bac3fabf64d, type: 2}
   materialsGroupName: Materials

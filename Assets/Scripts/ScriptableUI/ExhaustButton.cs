@@ -32,6 +32,7 @@ public class ExhaustButton : FlexibleUI
 
     private void Start()
     {
+        button = GetComponent<Button>();
         button.onClick.AddListener(NotifyPartsChanger);
     }
 
@@ -84,13 +85,6 @@ public class ExhaustButton : FlexibleUI
                 displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
                 image.sprite = displaySprite;
                 exhaust = exhaustData.exhaust5;
-                gameObject.name = buttonType.ToString();
-                break;
-            case ButtonType.exhaust6:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(exhaustData.exhaust6);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
-                exhaust = exhaustData.exhaust6;
                 gameObject.name = buttonType.ToString();
                 break;
         }

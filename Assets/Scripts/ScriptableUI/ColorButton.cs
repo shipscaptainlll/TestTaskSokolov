@@ -15,16 +15,21 @@ public class ColorButton : FlexibleUI
         Green,
         Violet,
         White,
-        Black
+        Black,
+        redBlueBI,
+        orangeDarkBI
     }
 
     Image image;
     Button button;
-    Color color;
+    Color colorMain;
+    Color colorFresnel;
+    bool colorBI;
 
     public ButtonType buttonType;
 
     public event Action<Color> colorChanged = delegate { };
+    public event Action<Color, Color> colorBIChanged = delegate { };
 
     private void Start()
     {
@@ -34,7 +39,14 @@ public class ColorButton : FlexibleUI
 
     void NotifyMaterialChanger()
     {
-        colorChanged(image.color);
+        if (!colorBI)
+        {
+            colorChanged(colorMain);
+        } else
+        {
+            colorBIChanged(colorMain, colorFresnel);
+        }
+        
     }
 
     protected override void OnSkinUI()
@@ -48,30 +60,55 @@ public class ColorButton : FlexibleUI
         switch (buttonType)
         {
             case ButtonType.Red:
-                image.color = colorData.redColor;
+                image.color = colorData.redColorImage;
+                colorMain = colorData.redColorMain;
                 gameObject.name = buttonType.ToString();
+                colorBI = false;
                 break;
             case ButtonType.Blue:
-                image.color = colorData.blueColor;
+                image.color = colorData.blueColorImage;
+                colorMain = colorData.blueColorMain;
                 gameObject.name = buttonType.ToString();
+                colorBI = false;
                 break;
             case ButtonType.Green:
-                image.color = colorData.greenColor;
+                image.color = colorData.greenColorImage;
+                colorMain = colorData.greenColorMain;
                 gameObject.name = buttonType.ToString();
+                colorBI = false;
                 break;
             case ButtonType.Violet:
-                image.color = colorData.violetColor;
+                image.color = colorData.violetColorImage;
+                colorMain = colorData.violetColorMain;
                 gameObject.name = buttonType.ToString();
+                colorBI = false;
                 break;
             case ButtonType.White:
-                image.color = colorData.whiteColor;
+                image.color = colorData.whiteColorImage;
+                colorMain = colorData.whiteColorMain;
                 gameObject.name = buttonType.ToString();
+                colorBI = false;
                 break;
             case ButtonType.Black:
-                image.color = colorData.blackColor;
+                image.color = colorData.blackColorImage;
+                colorMain = colorData.blackColorMain;
                 gameObject.name = buttonType.ToString();
+                colorBI = false;
                 break;
-                
+            case ButtonType.redBlueBI:
+                image.color = colorData.redblueBIImage;
+                colorMain = colorData.redblueBIColorMain;
+                colorFresnel = colorData.redblueBIColorFresnel;
+                gameObject.name = buttonType.ToString();
+                colorBI = true;
+                break;
+            case ButtonType.orangeDarkBI:
+                image.color = colorData.greenorangeBIImage;
+                colorMain = colorData.greenorangeBIColorMain;
+                colorFresnel = colorData.greenorangeBIColorFresnel;
+                gameObject.name = buttonType.ToString();
+                colorBI = true;
+                break;
         }
     }
 }

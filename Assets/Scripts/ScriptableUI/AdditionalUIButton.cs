@@ -27,6 +27,7 @@ public class AdditionalUIButton : FlexibleUI
 
     private void Start()
     {
+        button = GetComponent<Button>();
         button.onClick.AddListener(NotifyUIOpener);
     }
 

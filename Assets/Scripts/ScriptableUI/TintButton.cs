@@ -16,20 +16,21 @@ public class TintButton : FlexibleUI
 
     Image image;
     Button button;
-    Material material;
+    float metallicValue;
 
     public ButtonType buttonType;
 
-    public event Action<Material> tintChanged = delegate { };
+    public event Action<float> tintChanged = delegate { };
 
     private void Start()
     {
+        button = GetComponent<Button>();
         button.onClick.AddListener(NotifyMaterialChanger);
     }
 
     void NotifyMaterialChanger()
     {
-        tintChanged(material);
+        tintChanged(metallicValue);
     }
 
     protected override void OnSkinUI()
@@ -49,12 +50,12 @@ public class TintButton : FlexibleUI
         {
             case ButtonType.Metallic:
                 image.color = tintData.metallColor;
-                material = tintData.metallicMaterial;
+                metallicValue = tintData.metallicMaterial;
                 gameObject.name = buttonType.ToString();
                 break;
             case ButtonType.Matte:
                 image.color = tintData.matteColor;
-                material = tintData.matteMaterial;
+                metallicValue = tintData.matteMaterial;
                 gameObject.name = buttonType.ToString();
                 break;
         }

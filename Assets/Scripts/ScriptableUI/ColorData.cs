@@ -7,15 +7,29 @@ using UnityEngine.UI;
 public class ColorData : ScriptableObject
 {
 
-    public Color redColor;
+    public Color redColorImage;
+    public Color redColorMain;
 
-    public Color blueColor;
+    public Color blueColorImage;
+    public Color blueColorMain;
 
-    public Color greenColor;
+    public Color greenColorImage;
+    public Color greenColorMain;
 
-    public Color violetColor;
+    public Color violetColorImage;
+    public Color violetColorMain;
 
-    public Color whiteColor;
+    public Color whiteColorImage;
+    public Color whiteColorMain;
 
-    public Color blackColor;
+    public Color blackColorImage;
+    public Color blackColorMain;
+
+    public Color redblueBIImage;
+    public Color redblueBIColorMain;
+    public Color redblueBIColorFresnel;
+
+    public Color greenorangeBIImage;
+    public Color greenorangeBIColorMain;
+    public Color greenorangeBIColorFresnel;
 }

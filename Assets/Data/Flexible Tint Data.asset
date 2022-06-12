@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Flexible Tint Data
   m_EditorClassIdentifier: 
   metallColor: {r: 0.6666667, g: 0.6627451, b: 0.6784314, a: 1}
-  metallicMaterial: {fileID: 2100000, guid: 8e2464cbde641194dac3d344ab006ab7, type: 2}
+  metallicMaterial: 0.903
   matteColor: {r: 0.15686275, g: 0.15686275, b: 0.16862746, a: 1}
-  matteMaterial: {fileID: 2100000, guid: f4fec313c54858345b378310d32946d0, type: 2}
+  matteMaterial: 0

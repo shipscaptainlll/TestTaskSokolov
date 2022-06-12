@@ -29,6 +29,7 @@ public class MaterialChanger : MonoBehaviour
             if (table.GetComponent<ColorButton>() != null)
             {
                 table.GetComponent<ColorButton>().colorChanged += ChangeColor;
+                table.GetComponent<ColorButton>().colorBIChanged += ChangeBIColor;
             }
             if (table.GetComponent<TintButton>() != null)
             {
@@ -51,13 +52,19 @@ public class MaterialChanger : MonoBehaviour
 
     void ChangeColor(Color color)
     {
-        bodyRenderer.material.color = color;
+        bodyRenderer.material.SetInt("_isBITint", 0);
+        bodyRenderer.material.SetColor("_MainColor", color);
     }
 
-    void ChangeMaterial(Material material)
+    void ChangeBIColor(Color colorMain, Color colorFresnel)
     {
-        Color colorCache = bodyRenderer.material.color;
-        bodyRenderer.material = material;
-        bodyRenderer.material.color = colorCache;
+        bodyRenderer.material.SetInt("_isBITint", 1);
+        bodyRenderer.material.SetColor("_MainColor", colorMain);
+        bodyRenderer.material.SetColor("_FresnelColor", colorFresnel);
+    }
+
+    void ChangeMaterial(float metallicValue)
+    {
+        bodyRenderer.material.SetFloat("_Metallic", metallicValue); 
     }
 }

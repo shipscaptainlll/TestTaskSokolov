@@ -8,8 +8,10 @@ public class TintData : ScriptableObject
 {
 
     public Color metallColor;
-    public Material metallicMaterial;
+    [Range(0.0f, 1.0f)]
+    public float metallicMaterial;
 
     public Color matteColor;
-    public Material matteMaterial;
+    [Range(0.0f, 1.0f)]
+    public float matteMaterial;
 }

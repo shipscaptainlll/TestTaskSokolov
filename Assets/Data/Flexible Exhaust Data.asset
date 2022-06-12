@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d760c0f0c212e46ab49a4159eef750, type: 3}
   m_Name: Flexible Exhaust Data
   m_EditorClassIdentifier: 
-  exhaust1: {fileID: 7270045236857943560, guid: 298972918887e05438181afe7f0d789e, type: 3}
-  exhaust2: {fileID: 1748466915354741441, guid: 3bfec594fe252df46aeddb9eeec2c521, type: 3}
-  exhaust3: {fileID: 5129447084654571864, guid: 11d00f3ac8f773948bce961be9589b48, type: 3}
-  exhaust4: {fileID: 7869199088938215501, guid: 488e16d9d1b05fb4381a2c55da4eb195, type: 3}
-  exhaust5: {fileID: 5518328975974435248, guid: 9f880ffa0e2810c4f86020066eb7c5bd, type: 3}
-  exhaust6: {fileID: 4844833722293358617, guid: 4d8ec8237bd65e54eaca6f077fcccc4a, type: 3}
+  exhaust1: {fileID: 2897511580542269373, guid: efaba7004b95dd349ae9f23765e64b90, type: 3}
+  exhaust2: {fileID: 1039014446569144407, guid: 6c19617607965674e80e9d7b061e4971, type: 3}
+  exhaust3: {fileID: 4553000345301149706, guid: fb366968093909e469f29eece6c1ed0c, type: 3}
+  exhaust4: {fileID: 3097706073216462424, guid: e2a6ba9b7c6a9a84f88eb13c3f957b56, type: 3}
+  exhaust5: {fileID: 4881530508102755868, guid: 77c5b32b88b43d14e8fb0cf3a361a4df, type: 3}

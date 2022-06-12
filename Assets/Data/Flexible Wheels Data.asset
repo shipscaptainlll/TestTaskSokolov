@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b96c30f4b39cc4ca2ea1ee3fbf42d0, type: 3}
   m_Name: Flexible Wheels Data
   m_EditorClassIdentifier: 
-  wheels1: {fileID: 6968601522287364761, guid: 7104939257dc16d4bad6dfa77b6ce437, type: 3}
-  wheels2: {fileID: 1792480327713547224, guid: 1dd2da93bc00620458c3bfd2117ea038, type: 3}
-  wheels3: {fileID: 4881457997112544899, guid: fcb00c18dbf02344faa75c89440028e1, type: 3}
+  wheels1: {fileID: 4971100836892171306, guid: 3abf62123e9994140970ce9b146ed3c1, type: 3}
+  wheels2: {fileID: 7416080831435040321, guid: 04ae20ef8b51d4e4aa9dac8772cc05c8, type: 3}
+  wheels3: {fileID: 1560597837412565062, guid: 349ba6ce461db6c4a9c61e1bb8cca4f6, type: 3}

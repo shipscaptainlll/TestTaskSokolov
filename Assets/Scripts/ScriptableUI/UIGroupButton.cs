@@ -30,6 +30,7 @@ public class UIGroupButton : FlexibleUI
     public event Action<String> buttonClicked = delegate { };
     public void Start()
     {
+        button = GetComponent<Button>();
         button.onClick.AddListener(NotifySubscribers);
     }
 
@@ -54,7 +55,7 @@ public class UIGroupButton : FlexibleUI
             
             case ButtonType.spoilersGroup:
                 assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.spoilersGroupImage);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(0.5f, 0.5f));
                 image.sprite = displaySprite;
                 textUI.text = uiGroupsData.spoilersGroupName;
                 gameObject.name = buttonType.ToString();

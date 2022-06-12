@@ -20,7 +20,7 @@ public class FlexibleUI : MonoBehaviour
 
     public virtual void Awake()
     {
-        OnSkinUI();
+        //OnSkinUI();
 
     }
 

@@ -16,5 +16,4 @@ public class ExhaustData : ScriptableObject
 
     public GameObject exhaust5;
 
-    public GameObject exhaust6;
 }

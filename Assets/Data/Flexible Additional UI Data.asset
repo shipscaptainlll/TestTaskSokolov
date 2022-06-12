@@ -15,3 +15,7 @@ MonoBehaviour:
   backButtonImage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   carLightsImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   carLightsText: Lights
+  engFlagImage: {fileID: 21300000, guid: 2f92f443ed2e1dd42b5a7dde99a5f30b, type: 3}
+  englishLanguageName: English
+  czFlagImage: {fileID: 21300000, guid: 8949a406bec9034488e6b8e6bfbd5e96, type: 3}
+  czechLanguageName: Czech

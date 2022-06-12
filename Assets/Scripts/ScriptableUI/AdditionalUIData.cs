@@ -11,4 +11,10 @@ public class AdditionalUIData : ScriptableObject
 
     public Sprite carLightsImage;
     public String carLightsText;
+
+    public Sprite engFlagImage;
+    public String englishLanguageName;
+
+    public Sprite czFlagImage;
+    public String czechLanguageName;
 }

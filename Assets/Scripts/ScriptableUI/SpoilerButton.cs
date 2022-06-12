@@ -31,6 +31,7 @@ public class SpoilerButton : FlexibleUI
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(NotifyPartsChanger);
+        UIInitialisation();
     }
 
     void NotifyPartsChanger()
@@ -38,6 +39,40 @@ public class SpoilerButton : FlexibleUI
         spoilerChanged(spoiler);
     }
 
+    void UIInitialisation()
+    {
+        image = GetComponent<Image>();
+        button = GetComponent<Button>();
+
+        image.type = Image.Type.Sliced;
+
+        switch (buttonType)
+        {
+            case ButtonType.spoiler1:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(spoilerData.spoiler1);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
+                spoiler = spoilerData.spoiler1;
+                gameObject.name = buttonType.ToString();
+                break;
+            case ButtonType.spoiler2:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(spoilerData.spoiler2);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
+                spoiler = spoilerData.spoiler2;
+                gameObject.name = buttonType.ToString();
+                break;
+            case ButtonType.spoiler3:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(spoilerData.spoiler3);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
+                spoiler = spoilerData.spoiler3;
+                gameObject.name = buttonType.ToString();
+                break;
+        }
+    }
+
+    //UI update in Editor mode
     protected override void OnSkinUI()
     {
         base.OnSkinUI();

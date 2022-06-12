@@ -26,6 +26,7 @@ public class TintButton : FlexibleUI
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(NotifyMaterialChanger);
+        UIInitialisation();
     }
 
     void NotifyMaterialChanger()
@@ -33,6 +34,29 @@ public class TintButton : FlexibleUI
         tintChanged(metallicValue);
     }
 
+    void UIInitialisation()
+    {
+        image = GetComponent<Image>();
+        button = GetComponent<Button>();
+
+        image.type = Image.Type.Sliced;
+
+        switch (buttonType)
+        {
+            case ButtonType.Metallic:
+                image.color = tintData.metallColor;
+                metallicValue = tintData.metallicMaterial;
+                gameObject.name = buttonType.ToString();
+                break;
+            case ButtonType.Matte:
+                image.color = tintData.matteColor;
+                metallicValue = tintData.matteMaterial;
+                gameObject.name = buttonType.ToString();
+                break;
+        }
+    }
+
+    //UI update in Editor mode
     protected override void OnSkinUI()
     {
         base.OnSkinUI();

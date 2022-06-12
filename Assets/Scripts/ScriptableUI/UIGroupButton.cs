@@ -32,6 +32,7 @@ public class UIGroupButton : FlexibleUI
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(NotifySubscribers);
+        UIInitialisation();
     }
 
     public void NotifySubscribers()
@@ -39,7 +40,48 @@ public class UIGroupButton : FlexibleUI
         buttonClicked(buttonType.ToString());
     }
 
+    void UIInitialisation()
+    {
+        image = GetComponent<Image>();
+        button = GetComponent<Button>();
+        textUI = transform.Find("Text").GetComponent<Text>();
 
+        image.type = Image.Type.Sliced;
+
+        switch (buttonType)
+        {
+            case ButtonType.spoilersGroup:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.spoilersGroupImage);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(0.5f, 0.5f));
+                image.sprite = displaySprite;
+                textUI.text = uiGroupsData.spoilersGroupName;
+                gameObject.name = buttonType.ToString();
+                break;
+            case ButtonType.wheelsGroup:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.wheelsGroupImage);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
+                textUI.text = uiGroupsData.wheelsGroupName;
+                gameObject.name = buttonType.ToString();
+                break;
+            case ButtonType.exhaustsGroup:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.exhaustsGroupImage);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
+                textUI.text = uiGroupsData.exhaustsGroupName;
+                gameObject.name = buttonType.ToString();
+                break;
+            case ButtonType.materialsGroup:
+                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.materialsGroupImage);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
+                textUI.text = uiGroupsData.materialsGroupName;
+                gameObject.name = buttonType.ToString();
+                break;
+        }
+    }
+
+    //UI update in Editor mode
     protected override void OnSkinUI()
     {
         base.OnSkinUI();
@@ -49,10 +91,9 @@ public class UIGroupButton : FlexibleUI
         textUI = transform.Find("Text").GetComponent<Text>();
 
         image.type = Image.Type.Sliced;
-
+        
         switch (buttonType)
         {
-            
             case ButtonType.spoilersGroup:
                 assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.spoilersGroupImage);
                 displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(0.5f, 0.5f));

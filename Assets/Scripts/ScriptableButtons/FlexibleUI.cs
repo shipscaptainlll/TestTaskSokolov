@@ -19,15 +19,8 @@ public class FlexibleUI : MonoBehaviour
 
     }
 
-    public virtual void Awake()
-    {
-        //OnSkinUI();
-
-    }
-
     public virtual void Update()
     {
-        //Application.isEditor
         if (!Application.isPlaying)
         {
             

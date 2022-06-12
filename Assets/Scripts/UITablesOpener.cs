@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class UITablesOpener : MonoBehaviour
 {
-    //static Transform groupsHolder;
     public static GameObject mainTable;
-    //static Transform elementsHolder;
     public static GameObject materialsTable;
     public static GameObject wheelsTable;
     public static GameObject spoilersTable;

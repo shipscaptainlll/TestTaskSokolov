@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MaterialChanger : MonoBehaviour
 {
-    [SerializeField] Transform colorElementsTable;
-
     static Transform car;
 
     static GameObject body;
@@ -18,32 +16,6 @@ public class MaterialChanger : MonoBehaviour
             car = value;
             InitializeCarParts();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*
-        Transform colorElementsHolder = colorElementsTable.Find("MainElements");
-        foreach(Transform table in colorElementsHolder)
-        {
-            if (table.GetComponent<ColorButton>() != null)
-            {
-                table.GetComponent<ColorButton>().colorChanged += ChangeColor;
-                table.GetComponent<ColorButton>().colorBIChanged += ChangeBIColor;
-            }
-            if (table.GetComponent<TintButton>() != null)
-            {
-                table.GetComponent<TintButton>().tintChanged += ChangeMaterial;
-            }
-        }
-        */
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     static void InitializeCarParts()

@@ -12,10 +12,8 @@ public class PartsChanger : MonoBehaviour
     static GameObject wheel3DAnchor;
     static GameObject spoiler;
     static GameObject spoiler3DAnchor;
-    //Vector3 spoilerDefaultPosition;
     static GameObject exhaust;
     static GameObject exhaust3DAnchor;
-    //Vector3 exhaustDefaultPosition;
 
     public static Transform Car { set { car = value; InitializeCarParts(); } get { return car; } }
     public GameObject WheelBackLeft { get { return wheelBackLeft; } }

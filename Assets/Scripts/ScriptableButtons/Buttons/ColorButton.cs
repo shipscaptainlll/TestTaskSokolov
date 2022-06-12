@@ -28,28 +28,12 @@ public class ColorButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    //public event Action<Color> colorChanged = delegate { };
-    //public event Action<Color, Color> colorBIChanged = delegate { };
-
     private void Start()
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(ChangeColor);
         UIInitialisation();
     }
-    /*
-    void NotifyMaterialChanger()
-    {
-        if (!colorBI)
-        {
-            colorChanged(colorMain);
-        } else
-        {
-            colorBIChanged(colorMain, colorFresnel);
-        }
-        
-    }
-    */
 
     void ChangeColor()
     {

@@ -11,6 +11,10 @@ public class SurroundingInitializator : MonoBehaviour
 
     void Start()
     {
+        if (defaultCar == null)
+        {
+            defaultCar = (Resources.Load("Prefabs/car 1203 black") as GameObject).transform;
+        }
         startCar = Instantiate(defaultCar);
         PartsChanger.Car = startCar;
         MaterialChanger.Car = startCar;

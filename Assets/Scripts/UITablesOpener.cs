@@ -16,17 +16,11 @@ public class UITablesOpener : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitializeUITables();
-    }
-
-    void InitializeUITables()
-    {
-
+        
     }
 
     public static void ShowTable(string tableName)
     {
-        Debug.Log(tableName);
         currentTable.SetActive(false);
         switch (tableName)
         {
@@ -52,21 +46,5 @@ public class UITablesOpener : MonoBehaviour
                 currentTable = mainTable;
                 break;
         }
-    }
-
-    void ShowMainTable(string buttonType)
-    {
-        if (buttonType == "backButton")
-        {
-            currentTable.SetActive(false);
-            mainTable.SetActive(true);
-            currentTable = mainTable;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

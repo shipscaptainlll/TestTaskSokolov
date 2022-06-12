@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class TintData : ScriptableObject
 {
 
-    public Color metallColor;
+    public Material metallImage;
     [Range(0.0f, 1.0f)]
     public float metallicMaterial;
 
-    public Color matteColor;
+    public Material matteImage;
     [Range(0.0f, 1.0f)]
     public float matteMaterial;
 }

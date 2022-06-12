@@ -19,7 +19,6 @@ public class UIGroupButton : FlexibleUI
 
     Image image;
     Button button;
-    GameObject groupFolder;
     Text textUI;
 
     Texture2D assetPreviewTexture;
@@ -27,7 +26,6 @@ public class UIGroupButton : FlexibleUI
 
     public ButtonType buttonType;
 
-    //public event Action<String> buttonClicked = delegate { };
     public void Start()
     {
         button = GetComponent<Button>();
@@ -57,34 +55,46 @@ public class UIGroupButton : FlexibleUI
         switch (buttonType)
         {
             case ButtonType.spoilersGroup:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.spoilersGroupImage);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(0.5f, 0.5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(uiGroupsData.spoilersGroupImage));
                 textUI.text = uiGroupsData.spoilersGroupName;
                 gameObject.name = buttonType.ToString();
+
                 break;
             case ButtonType.wheelsGroup:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.wheelsGroupImage);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(uiGroupsData.wheelsGroupImage));
                 textUI.text = uiGroupsData.wheelsGroupName;
                 gameObject.name = buttonType.ToString();
+
                 break;
             case ButtonType.exhaustsGroup:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.exhaustsGroupImage);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(uiGroupsData.exhaustsGroupImage));
                 textUI.text = uiGroupsData.exhaustsGroupName;
                 gameObject.name = buttonType.ToString();
+
                 break;
             case ButtonType.materialsGroup:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.materialsGroupImage);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(uiGroupsData.materialsGroupImage));
                 textUI.text = uiGroupsData.materialsGroupName;
                 gameObject.name = buttonType.ToString();
+
                 break;
         }
+    }
+
+    IEnumerator UploadGraphicsElements(GameObject assetGameobject)
+    {
+        yield return new WaitUntil(() => (AssetPreview.GetAssetPreview(assetGameobject) != null));
+        Texture2D assetPreviewTexture = AssetPreview.GetAssetPreview(assetGameobject);
+        Sprite displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+        image.sprite = displaySprite;
+    }
+
+    IEnumerator UploadGraphicsElements(Material assetMaterial)
+    {
+        yield return new WaitUntil(() => (AssetPreview.GetAssetPreview(assetMaterial) != null));
+        Texture2D assetPreviewTexture = AssetPreview.GetAssetPreview(assetMaterial);
+        Sprite displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+        image.sprite = displaySprite;
     }
 
     //UI update in Editor mode
@@ -108,6 +118,7 @@ public class UIGroupButton : FlexibleUI
                 gameObject.name = buttonType.ToString();
                 break;
             case ButtonType.wheelsGroup:
+
                 assetPreviewTexture = AssetPreview.GetAssetPreview(uiGroupsData.wheelsGroupImage);
                 displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
                 image.sprite = displaySprite;

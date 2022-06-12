@@ -576,9 +576,10 @@ MonoBehaviour:
   rotationLimit: {x: -80, y: 80}
   cameraZoomRangeFOV: {x: 15, y: 80}
   zoomSoothness: 4.5
-  zoomVelocity: 2
+  zoomVelocity: 1.78
   autoRotate: 1
   rotationSpeed: 0.1
+  autoRotationSpeed: 0.05
   startRotation: 180
 --- !u!114 &963194230
 MonoBehaviour:

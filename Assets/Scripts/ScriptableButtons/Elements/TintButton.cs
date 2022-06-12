@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +19,10 @@ public class TintButton : FlexibleUI
     Button button;
     float metallicValue;
 
-    public ButtonType buttonType;
+    Texture2D assetPreviewTexture;
+    Sprite displaySprite;
 
-    //public event Action<float> tintChanged = delegate { };
+    public ButtonType buttonType;
 
     private void Start()
     {
@@ -28,13 +30,6 @@ public class TintButton : FlexibleUI
         button.onClick.AddListener(ChangeTint);
         UIInitialisation();
     }
-
-    /*
-    void NotifyMaterialChanger()
-    {
-        tintChanged(metallicValue);
-    }
-    */
 
     void ChangeTint()
     {
@@ -51,16 +46,26 @@ public class TintButton : FlexibleUI
         switch (buttonType)
         {
             case ButtonType.Metallic:
-                image.color = tintData.metallColor;
+                StartCoroutine(UploadGraphicsElements(tintData.metallImage));
+                image.color = Color.white;
                 metallicValue = tintData.metallicMaterial;
                 gameObject.name = buttonType.ToString();
                 break;
             case ButtonType.Matte:
-                image.color = tintData.matteColor;
+                StartCoroutine(UploadGraphicsElements(tintData.matteImage));
+                image.color = Color.white;
                 metallicValue = tintData.matteMaterial;
                 gameObject.name = buttonType.ToString();
                 break;
         }
+    }
+
+    IEnumerator UploadGraphicsElements(Material assetMaterial)
+    {
+        yield return new WaitUntil(() => (AssetPreview.GetAssetPreview(assetMaterial) != null));
+        Texture2D assetPreviewTexture = AssetPreview.GetAssetPreview(assetMaterial);
+        Sprite displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+        image.sprite = displaySprite;
     }
 
     //UI update in Editor mode
@@ -70,22 +75,22 @@ public class TintButton : FlexibleUI
 
         image = GetComponent<Image>();
         button = GetComponent<Button>();
-        
-
-        //button.transition = Selectable.Transition.SpriteSwap;
-        //button.targetGraphic = image;
 
         image.type = Image.Type.Sliced;
 
         switch (buttonType)
         {
             case ButtonType.Metallic:
-                image.color = tintData.metallColor;
+                assetPreviewTexture = AssetPreview.GetAssetPreview(tintData.metallImage);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
                 metallicValue = tintData.metallicMaterial;
                 gameObject.name = buttonType.ToString();
                 break;
             case ButtonType.Matte:
-                image.color = tintData.matteColor;
+                assetPreviewTexture = AssetPreview.GetAssetPreview(tintData.matteImage);
+                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+                image.sprite = displaySprite;
                 metallicValue = tintData.matteMaterial;
                 gameObject.name = buttonType.ToString();
                 break;

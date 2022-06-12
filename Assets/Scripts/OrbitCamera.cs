@@ -15,9 +15,10 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] Vector2 cameraZoomRangeFOV = new Vector2(10, 60);
     [SerializeField] float zoomSoothness = 4.5f;
     [SerializeField] float zoomVelocity = 1;
-    [Header("Aurotation")]
+    [Header("Autorotation")]
     [SerializeField] bool autoRotate = true;
     [SerializeField] float rotationSpeed = 0.1f;
+    [SerializeField] float autoRotationSpeed = 0.03f;
     [SerializeField] float startRotation = 180;
 
     static Transform target;
@@ -59,66 +60,6 @@ public class OrbitCamera : MonoBehaviour
         }
     }
 
-    public static void ChangeTarget(String targetUIGroup)
-    {
-        switch (targetUIGroup)
-        {
-            case "wheelsGroup":
-                yRotationAxis = 17.21f;
-                xRotationAxis = 626.0f;
-                target = PartsChanger.Wheel3DAnchor.transform;
-                camera.fieldOfView = 30;
-                followingTarget = true;
-                break;
-            case "spoilersGroup":
-                yRotationAxis = 19.04f;
-                xRotationAxis = 2480.05f;
-                target = PartsChanger.Spoiler3DAnchor.transform;
-                camera.fieldOfView = 20;
-                followingTarget = true;
-                break;
-            case "exhaustsGroup":
-                yRotationAxis = 16.09f;
-                xRotationAxis = 3212.9f;
-                target = PartsChanger.Exhaust3DAnchor.transform;
-                camera.fieldOfView = 20;
-                followingTarget = true;
-                break;
-            case "materialsGroup":
-                yRotationAxis = 20.57f;
-                xRotationAxis = 2285.57f;
-                target = PartsChanger.Car.transform;
-                camera.fieldOfView  = 60;
-                followingTarget = true;
-                break;
-            case "backButton":
-                yRotationAxis = 20.57f;
-                xRotationAxis = 2285.57f;
-                target = PartsChanger.Car.transform;
-                camera.fieldOfView = 60;
-                followingTarget = true;
-                break;
-        }
-    }
-
-    public static void ChangeTarget(Transform newTarget)
-    {
-        yRotationAxis = 20.57f;
-        xRotationAxis = 2285.57f;
-        target = newTarget;
-        camera.fieldOfView = 60;
-        followingTarget = true;
-    }
-
-    public void ChangeTarget()
-    {
-        yRotationAxis = 20.57f;
-        xRotationAxis = 2285.57f;
-        target = PartsChanger.Car;
-        camera.fieldOfView = 60;
-        followingTarget = true;
-    }
-
     private void Update()
     {
         Zoom();
@@ -126,21 +67,17 @@ public class OrbitCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (autorotationTurnedOn)
-        {
-            AutoRotation();
-        }
+        
         if (!followingTarget)
         {
             ManualRotation();
         } else { 
             FollowTarget(); 
         }
-    }
-
-    void AutoRotation()
-    {
-        xVelocity += rotationSpeed * xRotationSensitivity;
+        if (autorotationTurnedOn)
+        {
+            AutoRotation();
+        }
     }
 
     void ManualRotation()
@@ -166,7 +103,7 @@ public class OrbitCamera : MonoBehaviour
             yVelocity -= Input.GetAxis("Mouse Y") * yRotationSensitivity * Time.deltaTime * 25;
         }
 
-        xRotationAxis += xVelocity;
+        xRotationAxis += xVelocity * Time.deltaTime * 200;
         yRotationAxis += yVelocity;
 
         yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
@@ -179,23 +116,6 @@ public class OrbitCamera : MonoBehaviour
 
         xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * rotationSmoothing);
         yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * rotationSmoothing);
-    }
-
-    void FollowTarget()
-    {
-        Quaternion rotation;
-        rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5 * Time.fixedDeltaTime);
-        transform.position = Vector3.Lerp(transform.position, rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position, 4 * Time.fixedDeltaTime);
-
-
-        Vector3 distance = transform.position - (rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position);
-        float angleDifference = Quaternion.Angle(transform.rotation, rotation);
-
-        if (distance.magnitude < 0.5f && angleDifference < 0.01f)
-        {
-            followingTarget = false;
-        }
     }
 
     private void Zoom()
@@ -231,12 +151,6 @@ public class OrbitCamera : MonoBehaviour
         }
     }
 
-    public IEnumerator AutorotationTimer()
-    {
-        yield return new WaitForSeconds(5);
-        autorotationTurnedOn = true;
-    }
-
     private float ClampAngleBetweenMinAndMax(float angle, float min, float max)
     {
         if (angle < -360)
@@ -248,5 +162,84 @@ public class OrbitCamera : MonoBehaviour
             angle -= 360;
         }
         return Mathf.Clamp(angle, min, max);
+    }
+
+    void FollowTarget()
+    {
+        Quaternion rotation;
+        rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 5 * Time.fixedDeltaTime);
+        transform.position = Vector3.Lerp(transform.position, rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position, 4 * Time.fixedDeltaTime);
+
+
+        Vector3 distance = transform.position - (rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position);
+        float angleDifference = Quaternion.Angle(transform.rotation, rotation);
+
+        if (distance.magnitude < 0.5f && angleDifference < 0.01f)
+        {
+            followingTarget = false;
+        }
+    }
+
+    public static void ChangeTarget(String targetUIGroup)
+    {
+        switch (targetUIGroup)
+        {
+            case "wheelsGroup":
+                yRotationAxis = 17.21f;
+                xRotationAxis = 626.0f;
+                target = PartsChanger.Wheel3DAnchor.transform;
+                camera.fieldOfView = 30;
+                followingTarget = true;
+                break;
+            case "spoilersGroup":
+                yRotationAxis = 19.04f;
+                xRotationAxis = 2480.05f;
+                target = PartsChanger.Spoiler3DAnchor.transform;
+                camera.fieldOfView = 20;
+                followingTarget = true;
+                break;
+            case "exhaustsGroup":
+                yRotationAxis = 16.09f;
+                xRotationAxis = 3212.9f;
+                target = PartsChanger.Exhaust3DAnchor.transform;
+                camera.fieldOfView = 20;
+                followingTarget = true;
+                break;
+            case "materialsGroup":
+                yRotationAxis = 20.57f;
+                xRotationAxis = 2285.57f;
+                target = PartsChanger.Car.transform;
+                camera.fieldOfView = 60;
+                followingTarget = true;
+                break;
+            case "backButton":
+                yRotationAxis = 20.57f;
+                xRotationAxis = 2285.57f;
+                target = PartsChanger.Car.transform;
+                camera.fieldOfView = 60;
+                followingTarget = true;
+                break;
+        }
+    }
+
+    public static void ChangeTarget(Transform newTarget)
+    {
+        yRotationAxis = 20.57f;
+        xRotationAxis = 2285.57f;
+        target = newTarget;
+        camera.fieldOfView = 60;
+        followingTarget = true;
+    }
+
+    void AutoRotation()
+    {
+        xVelocity += autoRotationSpeed * 250 * xRotationSensitivity * Time.deltaTime;
+    }
+
+    public IEnumerator AutorotationTimer()
+    {
+        yield return new WaitForSeconds(5);
+        autorotationTurnedOn = true;
     }
 }

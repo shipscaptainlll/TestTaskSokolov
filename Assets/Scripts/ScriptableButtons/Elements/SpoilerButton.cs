@@ -47,27 +47,29 @@ public class SpoilerButton : FlexibleUI
         switch (buttonType)
         {
             case ButtonType.spoiler1:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(spoilerData.spoiler1);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(spoilerData.spoiler1));
                 spoiler = spoilerData.spoiler1;
                 gameObject.name = buttonType.ToString();
                 break;
             case ButtonType.spoiler2:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(spoilerData.spoiler2);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(spoilerData.spoiler2));
                 spoiler = spoilerData.spoiler2;
                 gameObject.name = buttonType.ToString();
                 break;
             case ButtonType.spoiler3:
-                assetPreviewTexture = AssetPreview.GetAssetPreview(spoilerData.spoiler3);
-                displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
-                image.sprite = displaySprite;
+                StartCoroutine(UploadGraphicsElements(spoilerData.spoiler3));
                 spoiler = spoilerData.spoiler3;
                 gameObject.name = buttonType.ToString();
                 break;
         }
+    }
+
+    IEnumerator UploadGraphicsElements(GameObject assetGameobject)
+    {
+        yield return new WaitUntil(() => (AssetPreview.GetAssetPreview(assetGameobject) != null));
+        Texture2D assetPreviewTexture = AssetPreview.GetAssetPreview(assetGameobject);
+        Sprite displaySprite = Sprite.Create(assetPreviewTexture, new Rect(0, 0, assetPreviewTexture.width, assetPreviewTexture.height), new Vector2(.5f, .5f));
+        image.sprite = displaySprite;
     }
 
     //UI update in Editor mode

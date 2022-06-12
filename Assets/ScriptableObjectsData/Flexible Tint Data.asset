@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422d9798a03ebcd4f80dc93f3438e46d, type: 3}
   m_Name: Flexible Tint Data
   m_EditorClassIdentifier: 
-  metallColor: {r: 0.6666667, g: 0.6627451, b: 0.6784314, a: 1}
+  metallImage: {fileID: 2100000, guid: 8c762f33a08218549b8d94a55411305c, type: 2}
   metallicMaterial: 0.903
-  matteColor: {r: 0.15686275, g: 0.15686275, b: 0.16862746, a: 1}
+  matteImage: {fileID: 2100000, guid: bd166638495c2a94cba0e7fd6ad5cafb, type: 3}
   matteMaterial: 0
